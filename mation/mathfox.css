@@ -26,6 +26,7 @@ body {
 
 /*个 标题栏增加按钮*/
 #titleLabelAddButton {
+    z-index: 1;
     position: fixed;
     right: 0px;
     height: 30px;
@@ -36,4 +37,24 @@ body {
     background-color: white;
     box-shadow: -3px 0px 3px rgba(0,0,0,0.1);
     font-size: 30px;
+}
+
+/*动画 按钮出现*/
+@keyframes display {
+    0% {
+        transform: translateY(30px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/*动画 按钮消失*/
+@keyframes delete {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-30px);
+    }
 }
