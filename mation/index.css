@@ -1,0 +1,31 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+form {
+    display: flex;
+    height: 50px;
+}
+    
+#canvas {
+    transform: rotateX(180deg);
+    width: 100%;
+    background-color: #eee;
+}
+
+#input {
+    width: 75%;
+    border: none;
+    border-left: 10px solid lightskyblue;
+    background-color: rgba(255,149,34,0.5);
+}
+
+#button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 25%;
+    background-color: lightskyblue;
+}
