@@ -1,0 +1,18 @@
+<!doctype html>
+<html> 
+	<head> 
+		<script src="index.js"></script> 
+		<link href="index.css" rel="stylesheet"> 
+		<meta charset="UTF-8"> 
+		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+	</head> 
+	<body> 
+		<canvas id="canvas" width="5000" height="5000" ontouchmove="getPosition(event)"></canvas> 
+		<form> 
+			<input id="input" placeholder="函数解析式"> 
+			<div id="button" onclick="draw()"> 
+				<p>生成</p> 
+			</div> 
+		</form>  
+	</body>
+</html>
