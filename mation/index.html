@@ -7,12 +7,10 @@
 		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
 	</head> 
 	<body> 
-		<canvas id="canvas" width="5000" height="5000" ontouchmove="getPosition(event)"></canvas> 
+		<canvas id="canvas" width="500" height="500" ontouchmove="getPosition(event)"></canvas> 
 		<form> 
-			<input id="input" placeholder="函数解析式"> 
-			<div id="button" onclick="draw()"> 
-				<p>生成</p> 
-			</div> 
+      		<div id="collapseButton" onclick="collapse()"></div>
+			<input onchange="draw()" class="input" placeholder="函数解析式">
 		</form>  
 	</body>
 </html>
