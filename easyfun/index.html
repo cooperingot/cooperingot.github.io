@@ -4,16 +4,16 @@
 		<script src="index.js"></script> 
 		<link href="index.css" rel="stylesheet"> 
 		<meta charset="UTF-8"> 
-        <title>简单函数｜EasyFun</title>
-		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+		<title>简单函数｜EasyFun</title> 
+		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"> 
 	</head> 
 	<body onload="initialize()"> 
-		<canvas id="canvas"></canvas> 
+		<canvas class="canvas" id="axis"></canvas> 
 		<form> 
-      		<div id="collapseButton" onclick="collapse(-250)"></div>
-            <div id="inputContainer">
-				<input oninput="drawFunction()" class="input" placeholder="函数解析式">
-         	</div>
-		</form>
+			<div id="collapseButton" onclick="collapse(-250)"></div> 
+			<div id="inputContainer"> 
+				<input oninput="drawFunction(0)" class="input" placeholder="函数解析式"> 
+			</div> 
+		</form>  
 	</body>
 </html>
