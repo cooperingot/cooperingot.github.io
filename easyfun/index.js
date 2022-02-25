@@ -18,16 +18,28 @@ function collapse(i){
 
 //初始化
 function initialize(){
-	canvas = document.getElementById("canvas");
-	canvas.width = 3*window.innerWidth;
-	canvas.height = 3*window.innerHeight;
+    cw = 3*window.innerWidth, ch = 3*window.innerHeight;
+    createCanvas(0);
+    drawAxis();
+}
+
+//创建函数
+function createCanvas(i){
+    var canvas = document.createElement("canvas");
+    canvas.classList.add("canvas");
+    canvas.id = "canvas" + i;
+    canvas.width = cw;
+    canvas.height = ch;
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext("2d");
+    return ctx;
 }
 
 //绘制函数
-function drawFunction(){
-	var input = document.getElementsByClassName("input")[0].value;
-	ctx = canvas.getContext("2d");
-	cw = canvas.width, ch= window.canvas.height;
+function drawFunction(i){
+	var input = document.getElementsByClassName("input")[i].value;
+   	var canvas = document.getElementById("canvas" + i);
+	var ctx = canvas.getContext("2d");
 	ctx.beginPath();
 	ctx.clearRect(0, 0, cw, ch);
 	ctx.lineWidth = 5;
@@ -41,7 +53,12 @@ function drawFunction(){
 			if (Math.abs(y) > ch){
             	x++;
 				y = computeFunction(x,input);
-				ctx.moveTo(cw/2 + x,ch/2 + y);
+            	if (Math.abs(y) == Infinity){
+					ctx.moveTo(cw/2 + x,ch/2 + y);
+               	}
+                else {
+                    ctx.lineTo(cw/2 + x,ch/2 + y);
+                }
 			}
 			else{
 				ctx.lineTo(cw/2 + x,ch/2 + y);
@@ -49,6 +66,7 @@ function drawFunction(){
 		}
 	}
 	ctx.stroke();
+    ctx.closePath();
 }
 
 //计算函数值
@@ -57,4 +75,18 @@ function computeFunction (x,input){
 	var Function = input.replace(/x/ig, nx);
 	var y = eval(Function)*scale;
     return y;
+}
+
+//绘制轴
+function drawAxis(){
+    var canvas = document.getElementById("axis");
+    var ctx = canvas.getContext("2d");
+    canvas.width = cw;
+    canvas.height = ch;
+    ctx.lineWidth = 5;
+    ctx.moveTo(0,ch/2);
+    ctx.lineTo(cw,ch/2);
+    ctx.moveTo(cw/2,0);
+    ctx.lineTo(cw/2,ch);
+    ctx.stroke();
 }
