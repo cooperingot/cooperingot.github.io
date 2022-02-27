@@ -13,11 +13,16 @@ form {
     z-index: 1;
 }
 
+/*族 添加按钮文字*/
+#addButton p {
+    font-size: 50px;
+}
+
 /*类 输入框*/
 .input {
     outline: none;
-    background-color: rgba(0,0,0,0);
     width: 100%;
+    flex: none;
     height: 50px;
     border: 1px solid lightskyblue;
     border-left: 30px solid lightskyblue;
@@ -36,6 +41,9 @@ form {
 
 /*个 输入框容器*/
 #inputContainer {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
     background-color: white;
     height: 250px;
     box-shadow: 0px -3px 5px rgba(0,0,0,0.1);
@@ -48,4 +56,17 @@ form {
     height: 30px;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
+}
+
+/*个 增加按钮*/
+#addButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    order: 2;
+    width: 100%-10px;
+    height: 50px;
+    background-color: #eee;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
 }
