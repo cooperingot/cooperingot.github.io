@@ -8,11 +8,14 @@
 		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"> 
 	</head> 
 	<body onload="initialize()"> 
-		<canvas class="canvas" id="axis"></canvas> 
+		<canvas class="canvas" id="axis"></canvas>
 		<form> 
 			<div id="collapseButton" onclick="collapse(-250)"></div> 
 			<div id="inputContainer"> 
 				<input oninput="drawFunction(0)" class="input" placeholder="函数解析式"> 
+            	<div id="addButton" onclick="addFunction()">
+               		<p>+</p>
+               	</div>
 			</div> 
 		</form>  
 	</body>
