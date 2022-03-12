@@ -7,7 +7,7 @@
 		<title>简单函数｜EasyFun</title> 
 		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"> 
 	</head> 
-	<body onload="initialize()" onresize="initialize()"> 
+	<body onload="initialize()" onresize="initialize()" ontouchend="event.preventDefault();"> 
 		<canvas ontouchstart="getPos(event)" ontouchmove="touchMove(event)" class="canvas" id="grid"></canvas>
 		<canvas class="canvas"></canvas>
         <div id="returnButton" onclick="returnIni()"></div>
