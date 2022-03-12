@@ -1,73 +1,59 @@
 var collapseValue = true;
 //是否收起
-var scale = 100;
-//缩放倍数
+var grid = {
+    CX: null, CY: null,
+    scale: 300
+};
+//网格参数
+var touch = {
+    startX: null, startY: null,
+    lastX: null, lastY: null
+};
+//触屏参数
 var ran = false;
-//我也不知道是什么,但删掉会出BUG
-var functionNumber = 0;
-//函数数量
-
-//收起
-function collapse(i){
-	document.getElementsByTagName("form")[0].style.transition = "0.3s ease-in-out";
-	if (collapseValue == false){
-		document.getElementsByTagName("form")[0].style.transform = "translateY(" + i + "px)";
-		collapseValue = true;
-	}
-	else{
-		document.getElementsByTagName("form")[0].style.transform = "translateY(0px)";
-		collapseValue = false;
-	}
-}
+//是否连接最后线段
 
 //初始化
-function initialize(){
-    cw = 3*window.innerWidth, ch = 3*window.innerHeight;
-    createCanvas(0);
-    drawAxis();
-}
-
-//创建函数
-function createCanvas(i){
-    var canvas = document.createElement("canvas");
-    canvas.classList.add("canvas");
-    canvas.id = "canvas" + i;
-    canvas.width = cw;
-    canvas.height = ch;
-    document.body.appendChild(canvas);
-    var ctx = canvas.getContext("2d");
-    return ctx;
+function initialize () {
+    collapseRange = 0.4*window.innerHeight;
+    if (collapseValue == true) {
+        document.getElementsByTagName("form")[0].style.transform = "translateY(" + collapseRange + "px)";
+    }
+    document.getElementById("inputsContainer").style.height = collapseRange + "px";
+    VH = 4*window.innerHeight, VW = 4*window.innerWidth;
+    fullScreen(document.getElementById("grid"));
+    fullScreen(document.getElementsByClassName("canvas")[1]);
+    drawGrid();
+    drawFunction(1);
 }
 
 //绘制函数
 function drawFunction(i){
-	var input = document.getElementsByClassName("input")[i].value;
-   	var canvas = document.getElementById("canvas" + i);
-	var ctx = canvas.getContext("2d");
+	var input = document.getElementsByClassName("inputs")[0].value;
+    var ctx = document.getElementsByClassName("canvas")[1].getContext("2d");
 	ctx.beginPath();
-	ctx.clearRect(0, 0, cw, ch);
-    ctx.strokeStyle = getColor();
+	ctx.clearRect(0, 0, VW, VH);
+    ctx.strokeStyle = "black";
 	ctx.lineWidth = 10;
-    var y = computeFunction(x,input);
-	for(var x = -cw/2;x <= cw/2;x++){
+	for(var x = -VW/2 - grid.CX;x <= VW/2 - grid.CX;x++){
         y = computeFunction(x,input);
 		switch (x){
-			case -cw/2:
-			ctx.moveTo(cw/2 + x,ch/2 + y);
+			case -VH/2:
+			ctx.moveTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
 			default:
-			if (Math.abs(y) > ch/2){
+			if (Math.abs(y) > VH/2 - grid.CY){
              	if (ran == false){
-             		ctx.lineTo(cw/2 + x,ch/2 + y);
+             		ctx.lineTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
                    	ran = true;
                 }
                 else {
                 	x++;
                 	y = computeFunction(x,input);
-					ctx.moveTo(cw/2 + x,ch/2 + y);
+					ctx.moveTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
                 }
 			}
 			else{
-				ctx.lineTo(cw/2 + x,ch/2 + y);
+				ctx.lineTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
             	ran = false;
 			}
 		}
@@ -77,24 +63,106 @@ function drawFunction(i){
 
 //计算函数值
 function computeFunction (x,input){
-   	var nx = x/scale;
+   	var nx = x/grid.scale;
 	var Function = input.replace(/x/ig, nx);
-	var y = eval(Function)*scale;
+	var y = eval(Function)*grid.scale;
     return y;
 }
 
-//绘制轴
-function drawAxis(){
-    var canvas = document.getElementById("axis");
-    var ctx = canvas.getContext("2d");
-    canvas.width = cw;
-    canvas.height = ch;
-    ctx.lineWidth = 5;
-    ctx.moveTo(0,ch/2);
-    ctx.lineTo(cw,ch/2);
-    ctx.moveTo(cw/2,0);
-    ctx.lineTo(cw/2,ch);
+//canvas全屏
+function fullScreen (element) {
+    element.setAttribute("height", VH);
+    element.setAttribute("width", VW);
+    element.style.height = VH/4 + "px";
+}
+
+//绘制网格
+function drawGrid () {
+    var ctx = document.getElementById("grid").getContext("2d");
+    ctx.clearRect(0,0,VW,VH);
+    ctx.strokeStyle = "#aaa";
+    ctx.lineWidth = 2;
+    for (var i = VW/2 + grid.scale + grid.CX; i < VW; i += grid.scale) {
+        drawVerAxis(ctx, i);
+    }
+    for (var i = VW/2 - grid.scale + grid.CX; i > 0; i -= grid.scale) {
+        drawVerAxis(ctx, i);
+    }
+    for (var i = VH/2 + grid.scale + grid.CY; i < VH; i += grid.scale) {
+        drawHorAxis(ctx, i);
+    }
+    for (var i = VH/2 - grid.scale + grid.CY; i > 0; i -= grid.scale) {
+        drawHorAxis(ctx, i);
+    }
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 4;
+    ctx.moveTo(0,VH/2 + grid.CY);
+    ctx.lineTo(VW,VH/2 + grid.CY);
+    ctx.moveTo(VW/2 + grid.CX,0);
+    ctx.lineTo(VW/2 + grid.CX,VH);
     ctx.stroke();
+}
+
+//收起
+function collapse(){
+	document.getElementsByTagName("form")[0].style.transition = "0.3s ease-in-out";
+	if (collapseValue == false){
+		document.getElementsByTagName("form")[0].style.transform = "translateY(" + collapseRange + "px)";
+		collapseValue = true;
+	}
+	else{
+		document.getElementsByTagName("form")[0].style.transform = "translateY(0px)";
+		collapseValue = false;
+	}
+}
+
+//画横线
+function drawHorAxis (ctx, i) {
+    ctx.beginPath();
+    ctx.moveTo(0, i);
+    ctx.lineTo(VW, i);
+    ctx.stroke();
+}
+
+//画竖线
+function drawVerAxis (ctx, i) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, VH);
+    ctx.stroke();
+}
+
+//获取坐标
+function getPos (e) {
+    touch.startX = e.touches[0].clientX;
+    touch.startY = e.touches[0].clientY;
+    touch.lastX = grid.CX, touch.lastY = grid.CY;
+}
+
+//触摸移动
+function touchMove (e) {
+    grid.CX = touch.lastX + 4*(e.touches[0].clientX - touch.startX);
+    grid.CY = touch.lastY - 4*(e.touches[0].clientY - touch.startY);
+    drawGrid();
+    drawFunction(0);
+}
+
+//缩放
+function zoom () {
+    grid.scale = eval(document.getElementById("test").value);
+    drawGrid();
+    drawFunction(0);
+}
+
+//返回初始状态
+function returnIni () {
+    grid = {
+    CX: null, CY: null,
+    scale: 300
+    };
+    drawGrid();
+    drawFunction(0);
 }
 
 //随机获取颜色
@@ -110,15 +178,4 @@ function getColor(){
         case 4:
         return "rgba(0,159,13,0.7)";
     }
-}
-
-//添加函数 
-function addFunction (){
-    functionNumber++;
-    var input = document.createElement("input");
-    createCanvas(functionNumber);
-    input.classList.add("input");
-    input.placeholder = "函数解析式";
-    document.getElementById("inputContainer").appendChild(input);
-    input.setAttribute("oninput","drawFunction(" + functionNumber + ")");
 }
