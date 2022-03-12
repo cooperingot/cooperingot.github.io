@@ -5,18 +5,19 @@
 		<link href="index.css" rel="stylesheet"> 
 		<meta charset="UTF-8"> 
 		<title>简单函数｜EasyFun</title> 
-		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"> 
+		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"> 
 	</head> 
-	<body onload="initialize()"> 
-		<canvas class="canvas" id="axis"></canvas>
-		<form> 
-			<div id="collapseButton" onclick="collapse(-250)"></div> 
-			<div id="inputContainer"> 
-				<input oninput="drawFunction(0)" class="input" placeholder="函数解析式"> 
-            	<div id="addButton" onclick="addFunction()">
-               		<p>+</p>
-               	</div>
-			</div> 
+	<body onload="initialize()" onresize="initialize()"> 
+		<canvas ontouchstart="getPos(event)" ontouchmove="touchMove(event)" class="canvas" id="grid"></canvas>
+		<canvas class="canvas"></canvas>
+        <div id="returnButton" onclick="returnIni()"></div>
+		<form>
+            <div id="collapseButton" onclick="collapse()"></div>
+			<div id="inputsContainer">
+                <span></span>
+                <input id="test" type="range" min="1" max="600" oninput="zoom()">
+                <input class="inputs" oninput="drawFunction()">
+            </div> 
 		</form>  
 	</body>
 </html>
