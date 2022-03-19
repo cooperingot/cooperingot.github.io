@@ -1,4 +1,3 @@
-
 /*body*/
 body {
 	padding: 0px;
@@ -9,6 +8,7 @@ body {
 /*族 表单*/
 form {
     position: fixed;
+    border: 1px solid black;
     z-index: 1;
     width: 100%;
     bottom: 0px;
@@ -36,13 +36,12 @@ form {
     background-color: rgba(0,0,0,0);
     display: block;
     position: absolute;
+    z-index: 0;
     top: 0px;
 }
 
 /*个 网格*/
 #grid {
-    display: block;
-    position: absolute;
     z-index: 1;
 }
 
