@@ -7,16 +7,14 @@
 		<title>简单函数｜EasyFun</title> 
 		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"> 
 	</head> 
-	<body onload="initialize()" onresize="initialize()" ontouchend="event.preventDefault();"> 
-		<canvas ontouchstart="getPos(event)" ontouchmove="touchMove(event)" class="canvas" id="grid"></canvas>
-		<canvas class="canvas"></canvas>
+	<body onload="initialize()" onresize="initialize()"> 
+		<canvas ontouchmove="getTouches(event)" ontouchstart="getPos(event)" class="canvas" id="grid"></canvas>
         <div id="returnButton" onclick="returnIni()"></div>
 		<form>
             <div id="collapseButton" onclick="collapse()"></div>
 			<div id="inputsContainer">
                 <span></span>
-                <input id="test" type="range" min="1" max="600" oninput="zoom()">
-                <input class="inputs" oninput="drawFunction()">
+                <input class="inputs">
             </div> 
 		</form>  
 	</body>
