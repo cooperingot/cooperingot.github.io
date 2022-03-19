@@ -6,12 +6,14 @@ var grid = {
 };
 //网格参数
 var touch = {
-    startX: null, startY: null,
-    lastX: null, lastY: null
+    startX0: null, startY0: null,
+    startX1: null, startY1: null,
+    lastX: null, lastY: null,
+    lastScale: 300
 };
 //触屏参数
-var ran = false;
-//是否连接最后线段
+var zoomed = false;
+//是否缩放
 
 //初始化
 function initialize () {
@@ -22,51 +24,7 @@ function initialize () {
     document.getElementById("inputsContainer").style.height = collapseRange + "px";
     VH = 4*window.innerHeight, VW = 4*window.innerWidth;
     fullScreen(document.getElementById("grid"));
-    fullScreen(document.getElementsByClassName("canvas")[1]);
     drawGrid();
-    drawFunction(1);
-}
-
-//绘制函数
-function drawFunction(i){
-	var input = document.getElementsByClassName("inputs")[0].value;
-    var ctx = document.getElementsByClassName("canvas")[1].getContext("2d");
-	ctx.beginPath();
-	ctx.clearRect(0, 0, VW, VH);
-    ctx.strokeStyle = "black";
-	ctx.lineWidth = 10;
-	for(var x = -VW/2 - grid.CX;x <= VW/2 - grid.CX;x++){
-        y = computeFunction(x,input);
-		switch (x){
-			case -VH/2:
-			ctx.moveTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
-			default:
-			if (Math.abs(y) > VH/2 - grid.CY){
-             	if (ran == false){
-             		ctx.lineTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
-                   	ran = true;
-                }
-                else {
-                	x++;
-                	y = computeFunction(x,input);
-					ctx.moveTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
-                }
-			}
-			else{
-				ctx.lineTo(VW/2 + x + grid.CX,VH/2 + y + grid.CY);
-            	ran = false;
-			}
-		}
-	}
-	ctx.stroke();
-}
-
-//计算函数值
-function computeFunction (x,input){
-   	var nx = x/grid.scale;
-	var Function = input.replace(/x/ig, nx);
-	var y = eval(Function)*grid.scale;
-    return y;
 }
 
 //canvas全屏
@@ -117,6 +75,19 @@ function collapse(){
 	}
 }
 
+function getTouches (e) {
+    switch (e.touches.length){
+        case 1:
+        if (zoomed == false) {
+            touchMove(e);
+        }
+        break;
+        case 2:
+        touchZoom(e);
+        break;
+    } 
+}
+
 //画横线
 function drawHorAxis (ctx, i) {
     ctx.beginPath();
@@ -135,24 +106,33 @@ function drawVerAxis (ctx, i) {
 
 //获取坐标
 function getPos (e) {
-    touch.startX = e.touches[0].clientX;
-    touch.startY = e.touches[0].clientY;
+    zoomed = false;
+    touch.startX0 = e.touches[0].clientX;
+    touch.startY0 = e.touches[0].clientY;
+    if (e.touches[1]) {
+        touch.startX1 = e.touches[1].clientX;
+        touch.startY1 = e.touches[1].clientY;
+    }
     touch.lastX = grid.CX, touch.lastY = grid.CY;
+    touch.lastScale = grid.scale;
 }
 
 //触摸移动
 function touchMove (e) {
-    grid.CX = touch.lastX + 4*(e.touches[0].clientX - touch.startX);
-    grid.CY = touch.lastY - 4*(e.touches[0].clientY - touch.startY);
+    grid.CX = touch.lastX + 4*(e.touches[0].clientX - touch.startX0);
+    grid.CY = touch.lastY - 4*(e.touches[0].clientY - touch.startY0);
     drawGrid();
-    drawFunction(0);
 }
 
 //缩放
-function zoom () {
-    grid.scale = eval(document.getElementById("test").value);
+function touchZoom (e) {
+    var touch0 = e.touches[0];
+    var touch1 = e.touches[1];
+    var rect0 = Math.hypot(touch.startX0 - touch.startX1 , touch.startY0 - touch.startY1);
+    var rect1 = Math.hypot(touch0.clientX - touch1.clientX , touch0.clientY - touch1.clientY);
+    grid.scale = touch.lastScale * (rect1 / rect0);
+    zoomed = true;
     drawGrid();
-    drawFunction(0);
 }
 
 //返回初始状态
@@ -162,20 +142,4 @@ function returnIni () {
     scale: 300
     };
     drawGrid();
-    drawFunction(0);
-}
-
-//随机获取颜色
-function getColor(){
-    var random = Math.floor(Math.random() * (4 - 0) ) + 1;
-    switch (random){
-    	case 1:
-        return "rgba(246,143,60,0.7)";
-        case 2:
-        return "rgba(0,180,255,0.7)";
-        case 3:
-        return "rgba(211,15,15,0.7)";
-        case 4:
-        return "rgba(0,159,13,0.7)";
-    }
 }
