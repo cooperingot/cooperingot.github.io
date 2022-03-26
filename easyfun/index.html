@@ -1,21 +1,24 @@
 <!doctype html>
 <html> 
 	<head> 
-		<script src="index.js"></script> 
 		<link href="index.css" rel="stylesheet"> 
 		<meta charset="UTF-8"> 
 		<title>简单函数｜EasyFun</title> 
 		<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"> 
 	</head> 
-	<body onload="initialize()" onresize="initialize()"> 
-		<canvas ontouchmove="getTouches(event)" ontouchstart="getPos(event)" class="canvas" id="grid"></canvas>
-        <div id="returnButton" onclick="returnIni()"></div>
+	<body onresize="initialize()"> 
+        <h1>Easyfun|简单函数</h1>
+		<canvas class="canvas" id="fun0"></canvas>
+        <div id="returnButton"></div>
 		<form>
-            <div id="collapseButton" onclick="collapse()"></div>
-			<div id="inputsContainer">
-                <span></span>
-                <input class="inputs">
-            </div> 
+            <div id="collapseContainer">
+                <svg onclick="collapse()" id="collapseButton" viewbox="0 0 50 50">
+                    <path fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M10,33 L25,17 L40,33"/> 
+                </svg>
+            </div>
+            <span></span>
+            <input class="inputs" oninput="drawFunction()">
 		</form>  
+		<script src="index.js"></script> 
 	</body>
 </html>
