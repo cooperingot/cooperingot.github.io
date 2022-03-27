@@ -7,6 +7,11 @@ body {
     overscroll-behavior: none;
 }
 
+/*族 侧边栏收起图像*/
+#sideCollapseButton path {
+    transition: 0.3s ease-in-out;
+}
+
 /*族 标题*/
 h1 {
     position: fixed;
@@ -15,6 +20,7 @@ h1 {
     padding-left: 10px;
     color: #bbb;
     font-family: "Poppins";
+    z-index: 2;
 }
 
 /*族 表单*/
@@ -31,6 +37,15 @@ form {
 /*族 区分线*/
 form span {
     border: 1px solid lightskyblue;
+}
+
+/*类 侧边栏按钮*/
+.sideLabelButton {
+    width: 100%-45px;
+    line-height: 50px;
+    padding-left: 10px;
+    color: white;
+    height: 50px;
 }
 
 /*类 输入框*/
@@ -54,6 +69,32 @@ form span {
     top: 0px;
 }
 
+/*名 生成图像按钮*/
+#makePicButton {
+    background-color: dodgerblue;
+}
+
+/*名 侧边栏*/
+#sideLabel {
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    background-color: white;
+    transform: translate(-250px);
+    transition: 0.3s ease-in-out;
+}
+
+/*名 侧边收起按钮*/
+#sideCollapseButton {
+    transform: rotate(-90deg);
+    width: 40px;
+    position: absolute;
+    right: -40px;
+    top: 0px;
+    z-index: 2;
+    stroke: #aaa;
+}
+
 /*名 收起按钮*/
 #collapseButton {
     flex: 0 0 40px;
@@ -68,7 +109,7 @@ form span {
 #collapseContainer {
     flex: 0 0 40px;
     background-color: white;
-    box-shadow: 0px 3px 3px #ddd;
+    box-shadow: 0px 3px 3px #ddd, 0px -3px 3px #ddd;
     position: relative;
     z-index: 1;
 }
@@ -84,4 +125,11 @@ form span {
     height: 50px;
     border-radius: 5px;
     box-shadow: 1px 1px 1px #ddd;
+}
+
+/*特 字体*/
+@font-face {
+    font-family: Poppins;
+    src: url(./fonts/Poppins.ttf);
+    font-weight: normal;
 }
