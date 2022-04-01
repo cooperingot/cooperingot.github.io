@@ -74,6 +74,11 @@ form span {
     background-color: dodgerblue;
 }
 
+/*名 生成图像画板*/
+#pic {
+    display: none;
+}
+
 /*名 侧边栏*/
 #sideLabel {
     position: fixed;
