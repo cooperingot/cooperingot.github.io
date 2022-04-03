@@ -14,6 +14,8 @@ var touch = {
     lastScale: 0
 };
 //触屏参数
+const Function = [];
+//函数数组
 
 //更新界面
 function update () {
@@ -23,16 +25,34 @@ function update () {
     }
     document.querySelector("form").style.height = collapseRange + "px"
     VH = 4*window.innerHeight, VW = 4*window.innerWidth;
-    fullScreen(document.querySelector("#grid"));
-    fullScreen(document.querySelector("#pic"));
+    fullScreen(document.querySelectorAll(".canvas"));
+    addFunction();
+    drawFunction();
     drawGrid();
 }
 
+//网格操作 ↓↓↓
 //绘制网格
 function drawGrid () {
     const ctx = document.querySelector("#grid").getContext("2d");
     ctx.clearRect(0, 0, VW, VH);
     ctx.beginPath();
+    ctx.strokeStyle = "#aaa";
+    ctx.lineWidth = 1;
+    for (var i = VW/2 + grid.scale + grid.CX;i < VW && 0 < i; i += grid.scale) {
+        drawVerAxis(ctx, i);
+    }
+    for (var i = VW/2 - grid.scale + grid.CX; i > 0; i -= grid.scale) {
+        drawVerAxis(ctx, i);
+    }
+    for (var i = VH/2 + grid.scale + grid.CY; i < VH; i += grid.scale) {
+        drawHorAxis(ctx, i);
+    }
+    for (var i = VH/2 - grid.scale + grid.CY; i > 0; i -= grid.scale) {
+        drawHorAxis(ctx, i);
+    }
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
     //X轴
     ctx.moveTo(0, VH/2 + grid.CY);
@@ -49,18 +69,66 @@ function drawGrid () {
     ctx.closePath();
     ctx.stroke();
 }
+function drawHorAxis (ctx, i) {
+    ctx.beginPath();
+    ctx.moveTo(0, i);
+    ctx.lineTo(VW, i);
+    ctx.stroke();
+}
+
+function drawVerAxis (ctx, i) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, VH);
+    ctx.stroke();
+}
+//网格操作 ↑↑↑
+
+//函数操作 ↓↓↓
+//添加函数
+function addFunction () {
+    var functionNum = Function.length;
+    var canvas = document.createElement("canvas");
+    Function.push(canvas);
+    canvas.id = "fun" + functionNum;
+    canvas.classList.add("canvas");
+    fullScreen(canvas);
+    document.body.appendChild(canvas);
+}
 
 //绘制函数
 function drawFunction () {
     const ctx = document.querySelector("#fun0").getContext("2d");
-    ctx.beginPath();
+    var Function = document.querySelector("#input0").value;
+    var x = -VW/2, y = computeFunction(Function,x);
+    document.querySelector("#fun0").width = VW;
+    ctx.translate(VW/2, VH/2);
+    ctx.scale(1, -1);
+    ctx.moveTo(x + grid.CX, y - grid.CY);
+    ctx.lineWidth = 5;
+    for (x = -VW/2 - grid.CX; x <= VW/2 - grid.CX; x++) {
+        y = computeFunction(Function,x);
+        ctx.lineTo(x + grid.CX, y - grid.CY);
+    }
+    ctx.stroke();
 }
+
+//计算函数
+function computeFunction(i,x){
+    var nx = x/100;
+    i = i.replace(/x/ig, nx);
+    return eval(i)*100;
+}
+//函数操作 ↑↑↑
 
 //canvas全屏
 function fullScreen (obj) {
-    obj.setAttribute("height", VH);
-    obj.setAttribute("width", VW);
-    obj.style.height = VH/4 + "px";
+    var length = obj.length;
+    for (let i = 0; i < length; i++) {
+        obj[i].setAttribute("height", VH);
+        obj[i].setAttribute("width", VW);
+        obj[i].style.height = VH/4 + "px";
+    }
 }
 
 //收起侧边栏
@@ -81,7 +149,7 @@ function sideCollapse () {
 function collapse (){
 	if (collapseValue == false){
 		document.querySelector("form").style.transform = "translateY(" + collapseRange + "px)";
-		document.querySelector("#collapseButton").style.top = "-50px";
+		document.querySelector("#collapseButton").style.top = "-40px";
 		document.querySelector("#collapseButton path").setAttribute("d", "M10,33 L25,17 L40,33");
 		collapseValue = true;
 	}
@@ -99,6 +167,7 @@ function touchMove (e) {
     grid.CX = Math.round(touch.lastX + 4*(e.touches[0].clientX - touch.startX0));
     grid.CY = Math.round(touch.lastY + 4*(e.touches[0].clientY - touch.startY0));
     drawGrid();
+    drawFunction();
 }
 
 //获取触碰
@@ -133,6 +202,7 @@ function returnIni () {
     scale: 300, multiple: 0
     };
     drawGrid();
+    drawFunction();
 }
 
 update();
