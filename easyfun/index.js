@@ -100,13 +100,17 @@ function addFunction () {
 function drawFunction () {
     const ctx = document.querySelector("#fun0").getContext("2d");
     var Function = document.querySelector("#input0").value;
-    var x = -VW/2, y = computeFunction(Function,x);
+    var x = -VW/2 - grid.CX, y = computeFunction(Function,x);
     document.querySelector("#fun0").width = VW;
     ctx.translate(VW/2, VH/2);
     ctx.scale(1, -1);
     ctx.moveTo(x + grid.CX, y - grid.CY);
     ctx.lineWidth = 5;
-    for (x = -VW/2 - grid.CX; x <= VW/2 - grid.CX; x++) {
+    /*do{
+        x++;
+    }
+    while(x <= VW/2 - grid.CX && x >= -grid.CX);*/
+    for (x = -VW/2 - grid.CX; x <= VW/2 - grid.CX && x >= -VW/2 - grid.CX; x++) {
         y = computeFunction(Function,x);
         ctx.lineTo(x + grid.CX, y - grid.CY);
     }
