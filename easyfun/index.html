@@ -1,0 +1,41 @@
+<!doctype html>
+<html ontouchmove="event.preventDefault()"> 
+    <head> 
+        <link href="index.css" rel="stylesheet"> 
+        <meta charset="UTF-8"> 
+        <title>简单函数｜EasyFun</title> 
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"> 
+    </head> 
+    <body onresize="update()"> 
+        <!--提示文字-->
+        <h1>Easyfun|简单函数</h1> 
+        <!--网格画板-->
+        <canvas class="canvas" id="grid" ontouchmove="getTouches(event)" ontouchend="getPos(event)" ontouchstart="getPos(event)"></canvas>
+        <!--生成图片画板-->
+        <canvas class="canvas" id="pic"></canvas>
+        <!--恢复初始按钮-->
+        <div id="returnButton" onclick="returnIni()"></div> 
+        <!--侧边栏-->
+        <div id="sideLabel">
+            <div onclick="makePic()" id="makePicButton" class="sideLabelButton button"><b>下载</b></div>
+            <svg id="sideCollapseButton" onclick="sideCollapse()" viewbox="0 0 50 50">
+                <path d="M10,10 L10,40 M25,10 L25,40 M40,10 L40,40" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            </svg>
+        </div>
+        <!--底部栏-->
+        <form> 
+            <div id="collapseContainer"> 
+                <svg onclick="collapse()" id="collapseButton" viewbox="0 0 50 50">
+                    <path d="M10,33 L25,17 L40,33" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/> 
+                </svg> 
+            </div>
+            <span></span> 
+            <!--输入框-->
+            <input class="inputs button" id="input0" oninput="drawFunction()"> 
+            <!--添加按钮-->
+            <div onclick="addFunction()" class="button" id="addFunctionButton">+</div>
+        </form> 
+        <!--引入JS-->
+        <script src="index.js"></script>  
+    </body>
+</html>
