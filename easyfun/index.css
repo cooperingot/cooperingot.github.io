@@ -1,0 +1,164 @@
+/*body*/
+body {
+    background-color: #eee;
+	padding: 0px;
+    margin: 0px;
+    position: relative;
+    overscroll-behavior: none;
+}
+
+/*族 侧边栏收起图像*/
+#sideCollapseButton path {
+    transition: 0.3s ease-in-out;
+}
+
+/*族 标题*/
+h1 {
+    position: fixed;
+    bottom: 0px;
+    font-size: 15px;
+    padding-left: 10px;
+    color: #bbb;
+    font-family: "Poppins";
+    z-index: 999;
+}
+
+/*族 表单*/
+form {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
+/*族 区分线*/
+form span {
+    border: 1px solid lightskyblue;
+}
+
+/*类 侧边栏按钮*/
+.sideLabelButton {
+    width: 100%-45px;
+    padding-left: 10px;
+    color: white;
+}
+
+/*类 按钮|输入框*/
+.button {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    outline: none;
+    line-height: 50px;
+    flex: none;
+}
+
+/*类 输入框*/
+.inputs {
+    padding-left: 30px;
+    border: 2px solid lightskyblue;
+    border-top: none;
+}
+
+/*类 画板*/
+.canvas {
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 0px;
+}
+
+/*名 添加函数按钮*/
+#addFunctionButton {
+    border-left: 3px solid #bbb;
+    border-right: 3px solid #bbb;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    background-color: dodgerblue;
+}
+
+/*名 生成图像按钮*/
+#makePicButton {
+    background-color: dodgerblue;
+}
+
+/*名 生成图像画板*/
+#pic {
+    display: none;
+}
+
+/*名 侧边栏*/
+#sideLabel {
+    position: fixed;
+    z-index: 2;
+    height: 100%;
+    width: 250px;
+    background-color: white;
+    transform: translate(-250px);
+    transition: 0.3s ease-in-out;
+}
+
+/*名 侧边打开按钮*/
+#sideCollapseButton {
+    transform: rotate(-90deg);
+    width: 40px;
+    position: fixed;
+    z-index: 1;
+    stroke: #aaa;
+}
+
+/*名 侧边栏关闭区域*/
+#closeArea {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 0;
+}
+
+/*名 收起按钮*/
+#collapseButton {
+    flex: 0 0 40px;
+    width: 40px;
+    stroke: #aaa;
+    position: absolute;
+    right: 0px;
+    top: -40px;
+}
+
+/*名 收起栏*/
+#collapseContainer {
+    flex: 0 0 40px;
+    background-color: white;
+    box-shadow: 0px 3px 3px #ddd, 0px -3px 3px #ddd;
+}
+
+/*名 返回按钮*/
+#returnButton {
+    background-color: white;
+    position: fixed;
+    z-index: 1;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #ddd;
+}
+
+/*名 网格画板*/
+#grid {
+    z-index: 1;
+}
+
+/*特 字体*/
+@font-face {
+    font-family: Poppins;
+    src: url(./fonts/Poppins.ttf);
+    font-weight: normal;
+}

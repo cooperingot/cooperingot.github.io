@@ -2,6 +2,8 @@ var collapseValue = true;
 //是否收起
 var sideCollapseValue = true;
 //侧边是否收起
+var outside = false;
+//绘制点是否在屏幕外
 var grid = {
     CX: null, CY: null,
     scale: 300, multiple: 0
@@ -97,7 +99,7 @@ function addFunction () {
 }
 
 //绘制函数
-function drawFunction () {
+function drawFunction (isMoving) {
     const ctx = document.querySelector("#fun0").getContext("2d");
     var Function = document.querySelector("#input0").value;
     var x = -VW/2 - grid.CX, y = computeFunction(Function,x);
@@ -106,22 +108,37 @@ function drawFunction () {
     ctx.scale(1, -1);
     ctx.moveTo(x + grid.CX, y - grid.CY);
     ctx.lineWidth = 5;
-    /*do{
-        x++;
+    if (isMoving == true) {
+        for (;x <= VW/2 - grid.CX + (VW/2 % 30);x += 30){
+            drawFunctionPath(Function,x,ctx);
+        }
     }
-    while(x <= VW/2 - grid.CX && x >= -grid.CX);*/
-    for (x = -VW/2 - grid.CX; x <= VW/2 - grid.CX && x >= -VW/2 - grid.CX; x++) {
-        y = computeFunction(Function,x);
-        ctx.lineTo(x + grid.CX, y - grid.CY);
+    else {
+       for (;x <= VW/2 - grid.CX;x++){
+            drawFunctionPath(Function,x,ctx);
+        } 
     }
     ctx.stroke();
 }
 
+//绘制函数路径
+function drawFunctionPath (Function,x,ctx) {
+    y = computeFunction(Function,x);
+    let ly = computeFunction(Function,x-1);
+    //如果两点都在外,不连接
+    if (Math.abs(y - grid.CY) >= VH/2 && Math.abs(ly - grid.CY) >= VH/2){
+        ctx.moveTo(x + grid.CX, y - grid.CY);
+    }
+    else {
+        ctx.lineTo(x + grid.CX, y - grid.CY);
+    } 
+}
+
 //计算函数
 function computeFunction(i,x){
-    var nx = x/100;
+    var nx = x/grid.scale;
     i = i.replace(/x/ig, nx);
-    return eval(i)*100;
+    return eval(i)*grid.scale;
 }
 //函数操作 ↑↑↑
 
@@ -139,12 +156,12 @@ function fullScreen (obj) {
 function sideCollapse () {
     if (sideCollapseValue == true){
 		document.querySelector("#sideLabel").style.transform = "translateX(0px)";
-		document.querySelector("#sideCollapseButton path").setAttribute("d", "M25,10 L10,40 M25,10 L25,40 M25,10 L40,40");
+        document.querySelector("#closeArea").style.zIndex = "1";
 		sideCollapseValue = false;
 	}
 	else{
 		document.querySelector("#sideLabel").style.transform = "translateX(-250px)";
-		document.querySelector("#sideCollapseButton path").setAttribute("d", "M10,10 L10,40 M25,10 L25,40 M40,10 L40,40");
+        document.querySelector("#closeArea").style.zIndex = "0";
 		sideCollapseValue = true;
 	}
 }
@@ -171,7 +188,16 @@ function touchMove (e) {
     grid.CX = Math.round(touch.lastX + 4*(e.touches[0].clientX - touch.startX0));
     grid.CY = Math.round(touch.lastY + 4*(e.touches[0].clientY - touch.startY0));
     drawGrid();
-    drawFunction();
+    drawFunction(true);
+}
+
+//触摸缩放 
+function touchZoom (e) {
+    var rect1 = Math.hypot(touch.startX0 - touch.startX1, touch.startY0 - touch.startY1);
+    var rect2 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    grid.scale = Math.round(touch.lastScale * rect2/rect1);
+    drawGrid();
+    drawFunction(true);
 }
 
 //获取触碰
@@ -196,6 +222,7 @@ function getPos (e) {
     }
     touch.lastX = grid.CX, touch.lastY = grid.CY;
     touch.lastScale = grid.scale;
+    drawFunction(false);
 }
 //移动端操作↑↑↑
 
