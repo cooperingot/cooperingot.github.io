@@ -10,9 +10,10 @@
         <!--提示文字-->
         <h1>Easyfun|简单函数</h1> 
         <!--网格画板-->
-        <canvas class="canvas" id="grid" ontouchmove="getTouches(event)" ontouchend="getPos(event)" ontouchstart="getPos(event)"></canvas>
+        <canvas class="canvas" id="grid" ontouchmove="touchAction(event)" ontouchend="getPos(event)" ontouchstart="getPos(event)"></canvas>
         <!--生成图片画板-->
         <canvas class="canvas" id="pic"></canvas>
+        <canvas class="canvas" id="fun0"></canvas>
         <!--恢复初始按钮-->
         <div id="returnButton" onclick="returnIni()"></div> 
         <!--侧边栏-->
@@ -34,7 +35,7 @@
             </div>
             <span></span> 
             <!--输入框-->
-            <input class="inputs button" id="input0" oninput="drawFunction()"> 
+            <input class="inputs button" id="input0" oninput="drawFunction(true,0)"> 
             <!--添加按钮-->
             <div onclick="addFunction()" class="button" id="addFunctionButton">+</div>
         </form> 
