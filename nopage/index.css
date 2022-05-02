@@ -1,0 +1,31 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #FFCD00;
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+}
+
+p {
+    color: white;
+    width: 250px;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 10px;
+    background-color: dodgerblue;
+    font-weight: bold;
+    font-size: 35px;
+    animation: 5s rotate ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0%, 100% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  50% {
+    transform: rotate3d(0, 1, 0, 360deg);
+  }
+}
