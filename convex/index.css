@@ -1,0 +1,52 @@
+:root {
+    --pBX: 100px;
+    --pBY: 100px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pointBox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #25992F7A;
+    position: fixed;
+    transform: translateX(var(--pBX)) translateY(var(--pBY));
+}
+
+#pointBox canvas {
+    display: none;
+}
+
+#focalLength {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height: 30px;
+    outline: none;
+    padding-left: 10px;
+    border-radius: 3px;
+    border: 1px solid dodgerblue;
+}
+
+#pointPos {
+    background-color: white;
+    transition: 0.3s;
+    white-space: nowrap;
+    box-shadow: 3px 3px 3px #eee;
+    position: relative;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    top: -10px;
+    right: -25px;
+}
