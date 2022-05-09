@@ -26,8 +26,8 @@ body {
 
 #focalLength {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    margin: 10px;
     width: 100px;
     height: 30px;
     outline: none;
@@ -36,9 +36,24 @@ body {
     border: 1px solid dodgerblue;
 }
 
+#makePicButton {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    width: 70px;
+    height: 30px;
+    background-color: dodgerblue;
+    border-radius: 3px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
 #pointPos {
     background-color: white;
     transition: 0.3s;
+    font-family: helvetica;
     white-space: nowrap;
     box-shadow: 3px 3px 3px #eee;
     position: relative;

@@ -30,6 +30,11 @@ function drawImg () {
     //折射直线的斜率
     let slope1 = point.y/focalLength;
     canvas.width = "" + VW;
+    ctx.beginPath();
+    ctx.fillStyle = "#ffffff";
+    ctx.rect(0,0,VW,VH);
+    ctx.closePath();
+    ctx.fill();
     ctx.translate(VW/2, VH/2);
     ctx.scale(1, -1);
     ctx.beginPath();
@@ -150,6 +155,16 @@ function pointMove (e) {
 function getFocalLength () {
     focalLength = 10*document.querySelector("input").value;
     drawImg();
+}
+
+//生成图像
+function makePic () {
+    let url = document.querySelector("#canvas").toDataURL();
+    let a = document.createElement("a");
+    a.download = "光路图";
+    a.href = url;
+    a.click();
+    a.remove();
 }
 
 

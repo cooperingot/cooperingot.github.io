@@ -1,6 +1,5 @@
 <html ontouchmove="event.preventDefault()">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>凸透镜模拟</title>
         <link rel="stylesheet" href="index.css" type="text/css" />
@@ -9,6 +8,7 @@
         <form>
             <input type="text" id="focalLength" placeholder="焦距" oninput="getFocalLength()"/>
         </form>
+        <div id="makePicButton" onclick="makePic()">生成图片</div>
         <canvas id="canvas"></canvas>
         <div id="pointBox" ontouchstart="getPointPos(event)" ontouchmove="pointMove(event)">
             <canvas id="point"></canvas>
